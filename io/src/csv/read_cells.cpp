@@ -163,14 +163,12 @@ std::map<std::uint64_t, std::vector<traccc::cell> > read_all_cells(
 namespace traccc::io::csv {
 
 void read_cells(
-    cell_reader_output& out, std::string_view filename, const geometry* geom,
+    cell_reader_output& out,
+    const std::map<std::uint64_t, std::vector<traccc::cell>>& cellsMap,
+    const geometry* geom,
     const digitization_config* dconfig,
     const std::map<std::uint64_t, detray::geometry::barcode>* barcode_map,
     const bool deduplicate) {
-
-    // Get the cells and modules into an intermediate format.
-    auto cellsMap = (deduplicate ? read_deduplicated_cells(filename)
-                                 : read_all_cells(filename));
 
     // Fill the output containers with the ordered cells and modules.
     for (const auto& [original_geometry_id, cells] : cellsMap) {
@@ -197,6 +195,18 @@ void read_cells(
             out.cells.back().module_link = out.modules.size() - 1;
         }
     }
+}
+
+void read_cells(
+    cell_reader_output& out, std::string_view filename, const geometry* geom,
+    const digitization_config* dconfig,
+    const std::map<std::uint64_t, detray::geometry::barcode>* barcode_map,
+    const bool deduplicate) {
+
+    // Get the cells and modules into an intermediate format.
+    auto cellsMap = (deduplicate ? read_deduplicated_cells(filename)
+                                 : read_all_cells(filename));
+    read_cells(out, cellsMap, geom, dconfig, barcode_map, duplicate);
 }
 
 }  // namespace traccc::io::csv
