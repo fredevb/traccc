@@ -32,8 +32,10 @@ FetchContent_MakeAvailable( TBB )
 
 # Treat the TBB headers as "system headers", to avoid getting warnings from
 # them.
-get_target_property( _incDirs tbb INCLUDE_DIRECTORIES )
-target_include_directories( tbb
-   SYSTEM PUBLIC ${_incDirs} )
+get_target_property(_incDirs tbb INTERFACE_INCLUDE_DIRECTORIES)
+target_include_directories(tbb SYSTEM PUBLIC
+    $<BUILD_INTERFACE:${_incDirs}>
+    $<INSTALL_INTERFACE:include>
+)
 unset( _incDirs )
 
