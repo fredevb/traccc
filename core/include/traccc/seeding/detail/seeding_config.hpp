@@ -123,17 +123,17 @@ struct seedfinder_config {
     void setup() {
         highland = 13.6f * traccc::unit<traccc::scalar>::MeV *
                    std::sqrt(radLengthPerSeed) *
-                   (1f + 0.038f * std::log(radLengthPerSeed));
+                   (1.f + 0.038f * std::log(radLengthPerSeed));
 
         float maxScatteringAngle = highland / minPt;
         maxScatteringAngle2 = maxScatteringAngle * maxScatteringAngle;
 
         pTPerHelixRadius = bFieldInZ;
-        minHelixDiameter2 = std::pow(minPt * 2f / pTPerHelixRadius, 2f);
+        minHelixDiameter2 = std::pow(minPt * 2.f / pTPerHelixRadius, 2.f);
 
         // @TODO: This is definitely a bug because highland / pTPerHelixRadius
         // is in length unit
-        pT2perRadius = std::pow(highland / pTPerHelixRadius, 2f);
+        pT2perRadius = std::pow(highland / pTPerHelixRadius, 2.f);
     }
 };
 
@@ -198,7 +198,7 @@ struct seedfilter_config {
     scalar compatSeedWeight = 200.f;
     // minimum distance between compatible seeds to be considered for weight
     // boost
-    scalar deltaRMin = 5. * unit<scalar>::mm;
+    scalar deltaRMin = 5.f * unit<scalar>::mm;
     // in dense environments many seeds may be found per middle space point.
     // only seeds with the highest weight will be kept if this limit is reached.
     unsigned int maxSeedsPerSpM = 20;
@@ -216,10 +216,10 @@ struct seedfilter_config {
     scalar good_spT_weight_increase = 200.f;
 
     // bottom sp cut
-    scalar good_spB_min_weight = 380f;
+    scalar good_spB_min_weight = 380.f;
 
     // seed cut
-    scalar seed_min_weight = 200f;
+    scalar seed_min_weight = 200.f;
     scalar spB_min_radius = 43.f * unit<scalar>::mm;
 };
 
