@@ -248,9 +248,9 @@ void greedy_ambiguity_resolution_algorithm::compute_initial_state(
             if (ratio > warning_threshold) {
                 std::stringstream stream;
                 stream << std::fixed << std::setprecision(2) << (ratio * 100.)
-                    << "% of input measurements have an ID equal to 0 "
-                         "(measurement.measurement_id == 0). This may be "
-                         "suspicious.";
+                       << "% of input measurements have an ID equal to 0 "
+                          "(measurement.measurement_id == 0). This may be "
+                          "suspicious.";
                 LOG_WARN(stream.str());
             }
         }
